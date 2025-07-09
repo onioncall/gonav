@@ -7,12 +7,15 @@ This is a lightweight tool meant to speed up navigating directories in the termi
 ---
 
 ```
-     s                       - Focus in search bar
+     s                       - focus in search bar
      spacebar, right arrow   - go into directory
      b, left arrow           - exit directory
      enter                   - cd into selected directory
      esc                     - if focused in search, focuses in directory box
+     tab                     - toggles between search and directory box, can be used in place of s and esc depending where cursor focus is
      esc                     - if not focused in search, exits application without changing directory
+
+     when searching for a directory, if there is only one result 'enter' will cd you to that directory and exit the application, and 'spacebar' will navigate you into that directory
 ```
 
 

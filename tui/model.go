@@ -30,6 +30,7 @@ func InitialModel() Model {
 	ti := textinput.New()
 	ti.CharLimit = 50
 	ti.Width = 40
+	ti.Focus()
 
     w, h, _ := term.GetSize(int(os.Stdout.Fd())) //Maybe handle this
 	
@@ -42,7 +43,7 @@ func InitialModel() Model {
 		termWidth:  w,
 		termHeight: h,
 		textInput: ti,
-		inputFocused: false,
+		inputFocused: true,
 	}
 }
 
@@ -65,5 +66,5 @@ func GetDirectories(rd string) []string {
 }
 
 func (m Model) Init() tea.Cmd {
-	return nil
+	return m.textInput.Cursor.BlinkCmd()
 }

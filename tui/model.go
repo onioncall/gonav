@@ -6,10 +6,12 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"golang.org/x/term"
 )
 
 type Model struct {
 	directories		[]string
+	allDirectories	[]string
 	cursor   		int
 	selected 		map[int]string
 	OriginalDir		string
@@ -17,20 +19,30 @@ type Model struct {
 	termWidth  		int
 	termHeight 		int
 	textInput    textinput.Model
+	Logger		string
 	inputFocused bool
 }
 
 func InitialModel() Model {
 	dirs := GetDirectories(".")
-    dir, _ := os.Getwd() // maybe handle this
+    dir, _ := os.Getwd() // Maybe handle this
+	
+	ti := textinput.New()
+	ti.CharLimit = 50
+	ti.Width = 40
 
+    w, h, _ := term.GetSize(int(os.Stdout.Fd())) //Maybe handle this
+	
 	return Model{
 		directories: dirs,
+		allDirectories: dirs,
 		selected: make(map[int]string),
 		OriginalDir: dir,
 		CurrentDir: dir,
-		termWidth:  80,
-		termHeight: 24,
+		termWidth:  w,
+		termHeight: h,
+		textInput: ti,
+		inputFocused: false,
 	}
 }
 

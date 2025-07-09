@@ -8,7 +8,7 @@ import (
 func (m Model) View() string {
 	var content string
 	content += fmt.Sprintf("%s\n\n", m.CurrentDir)
-	if (len(m.directories) == 0) {
+	if len(m.directories) == 0 {
 		content += fmt.Sprintf("Empty Directory")
 	} else {
 		for i, choice := range m.directories {
@@ -21,6 +21,8 @@ func (m Model) View() string {
 	}
 
 	box := lipgloss.NewStyle().
+		Height(24).
+		Width(84).
 		Border(lipgloss.RoundedBorder()).
 		BorderForeground(lipgloss.Color("62")).
 		Padding(1, 2).
@@ -38,7 +40,7 @@ func (m Model) View() string {
 	combined := lipgloss.JoinVertical(
 		lipgloss.Center,
 		box,
-		"", // Empty line for spacing
+		"",
 		inputBox,
 	)
 

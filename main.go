@@ -12,8 +12,7 @@ import (
 func main() {
 	tty, err := os.OpenFile("/dev/tty", os.O_RDWR, 0)
 	if err != nil {
-		// Fallback if /dev/tty unavailable
-		return
+		panic(err)
 	}
 	defer tty.Close()
 
@@ -31,5 +30,10 @@ func main() {
 	}
 
 	m := finalModel.(tui.Model)
+
+	// if m.Logger != "" {
+	// 	fmt.Println(m.Logger)
+	// }
+
 	fmt.Print(m.CurrentDir)
 }

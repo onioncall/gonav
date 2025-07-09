@@ -9,11 +9,11 @@ func (m Model) View() string {
 	var content string
 	content += fmt.Sprintf("%s\n\n", m.CurrentDir)
 	if len(m.directories) == 0 {
-		content += fmt.Sprintf("Empty Directory")
+		content += fmt.Sprintf("No Matching Directory")
 	} else {
 		for i, choice := range m.directories {
 			cursor := " "
-			if m.cursor == i {
+			if m.cursor == i && !m.inputFocused {
 				cursor = ">"
 			}
 			content += fmt.Sprintf("%s - %s\n", cursor, choice)
@@ -34,7 +34,12 @@ func (m Model) View() string {
 		Padding(0, 1).
 		Width(50)
 
-	inputContent := fmt.Sprintf("Search: %s", m.textInput.View())
+	var inputContent string
+	if m.inputFocused {
+		inputContent = fmt.Sprintf("Search: %s", m.textInput.View())
+	} else {
+		inputContent = fmt.Sprintf("Search: %s", m.textInput.Value())
+	}
 	inputBox := inputStyle.Render(inputContent)
 
 	combined := lipgloss.JoinVertical(

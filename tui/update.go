@@ -15,7 +15,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
 			switch msg.String() {
-			case "esc", "jk":
+			case "esc":
 				m.inputFocused = false
 				return m, nil
 			case "enter":
@@ -40,7 +40,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q", "esc": 
 			m.CurrentDir = m.OriginalDir
 			return m, tea.Quit
-		case "s":
+		case "s", "S":
 			m.inputFocused = true
 			m.textInput.Focus()
 			return m, m.textInput.Cursor.BlinkCmd()

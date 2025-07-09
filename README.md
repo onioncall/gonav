@@ -13,8 +13,7 @@ enter                   - cd into selected directory
 esc                     - if focused in search, focuses in directory box
 esc                     - if not focused in search, exits application without changing directory
 
-https://github.com/user-attachments/assets/57319784-13fe-41f9-a527-882d7cfbabce
-
+https://github.com/user-attachments/assets/b4666d07-6646-4d6e-8344-b9b685a95e67
 
 ## Setup
 --- 

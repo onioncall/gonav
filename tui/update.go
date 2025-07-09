@@ -18,6 +18,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case "esc":
 				m.inputFocused = false
 				return m, nil
+			case " ":
+				if len(m.directories) == 1 {
+					m.inputFocused = false
+					dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, m.directories[0])
+					m = m.UpdateModelToNewDir(dirPath)
+					return m, nil
+				}
 			case "enter":
 				if len(m.directories) == 1 {
 					dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, m.directories[0])

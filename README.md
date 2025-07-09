@@ -6,12 +6,15 @@ This is a lightweight tool meant to speed up navigating directories in the termi
 ## Commands
 ---
 
-s                       - Focus in search Bar
-spacebar, right arrow   - go into directory
-b, left arrow           - exit directory
-enter                   - cd into selected directory
-esc                     - if focused in search, focuses in directory box
-esc                     - if not focused in search, exits application without changing directory
+```
+     s                       - Focus in search bar
+     spacebar, right arrow   - go into directory
+     b, left arrow           - exit directory
+     enter                   - cd into selected directory
+     esc                     - if focused in search, focuses in directory box
+     esc                     - if not focused in search, exits application without changing directory
+```
+
 
 https://github.com/user-attachments/assets/b4666d07-6646-4d6e-8344-b9b685a95e67
 

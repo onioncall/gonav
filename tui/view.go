@@ -16,7 +16,7 @@ func (m Model) View() string {
 			if m.cursor == i && !m.inputFocused {
 				cursor = ">"
 			}
-			content += fmt.Sprintf("%s - %s\n", cursor, choice)
+			content += fmt.Sprintf("%s - %s/\n", cursor, choice)
 		}
 	}
 

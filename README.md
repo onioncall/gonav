@@ -17,8 +17,6 @@ This is a lightweight tool meant to speed up navigating directories in the termi
 
      when searching for a directory, if there is only one result 'enter' will cd you to that directory and exit the application, and 'spacebar' will navigate you into that directory
 ```
-
-
 https://github.com/user-attachments/assets/b4666d07-6646-4d6e-8344-b9b685a95e67
 
 ## Setup
@@ -38,7 +36,12 @@ sudo cp gonav /usr/local/bin/gonav
 add the following to your shell rc file (.bashrc, .zshrc, etc)
 ```
 gonav() {
-     cd $(command gonav)
+   local dir=$(command gonav)
+   if [ ! -d "$dir" ]; then
+       echo "gonav: not a valid directory: $dir" >&2
+       return 1
+   fi
+   
+   cd "$dir"
 }
 ```
-There isn't error handling for this yet, I'm working on it. 

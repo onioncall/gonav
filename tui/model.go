@@ -1,7 +1,7 @@
 package tui
 
 import (
-	"fmt"
+	// "fmt"
 	"os"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -57,8 +57,7 @@ func GetDirectories(rd string) []string {
 	var dirs []string
 	for _, e := range entries {
 		if e.IsDir() {
-			dir := fmt.Sprintf("%s%s", e.Name(), "/")
-			dirs = append(dirs, dir)
+			dirs = append(dirs, e.Name())
 		}
 	}
 

@@ -62,22 +62,20 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor++
 			}
 		case "b", "left": 
-			lastDirInPath := fmt.Sprintf("%s/", filepath.Base(m.CurrentDir))
+			lastDirInPath := filepath.Base(m.CurrentDir)
 			nd := GetPreviousDir(m.CurrentDir)	
 			m = m.UpdateModelToNewDir(nd)
 			m.cursor = m.GetCursorReturnPosition(lastDirInPath)
 		case " ", "right":
 			if m.cursor < len(m.directories) {
 				selectedDir := m.directories[m.cursor]
-				dirPath := selectedDir[:len(selectedDir)-1]
-				dirPath = fmt.Sprintf("%s/%s", m.CurrentDir, dirPath)
+				dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, selectedDir)
 				m = m.UpdateModelToNewDir(dirPath)
 			}
 		case "enter": 
 			if m.cursor < len(m.directories) {
 				selectedDir := m.directories[m.cursor]
-				dirPath := selectedDir[:len(selectedDir)-1]
-				dirPath = fmt.Sprintf("%s/%s", m.CurrentDir, dirPath)
+				dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, selectedDir)
 				m.CurrentDir = dirPath
 			}
 

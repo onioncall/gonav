@@ -30,9 +30,9 @@ func InitialModel() Model {
 	ti := textinput.New()
 	ti.CharLimit = 50
 	ti.Width = 40
-	ti.Focus()
+	// ti.Focus()
 
-    w, h, _ := term.GetSize(int(os.Stdout.Fd())) //Maybe handle this
+    w, h, _ := term.GetSize(int(os.Stdout.Fd())) // Maybe handle this
 	
 	return Model{
 		directories: dirs,
@@ -43,7 +43,7 @@ func InitialModel() Model {
 		termWidth:  w,
 		termHeight: h,
 		textInput: ti,
-		inputFocused: true,
+		inputFocused: false, // for whatever reason, this breaks the ui location in the terminal
 	}
 }
 

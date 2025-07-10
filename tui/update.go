@@ -2,6 +2,7 @@ package tui
 
 import (
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -20,9 +21,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, nil
 			case " ":
 				if len(m.directories) == 1 {
-					m.inputFocused = false
 					dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, m.directories[0])
 					m = m.UpdateModelToNewDir(dirPath)
+					m.inputFocused = true
+					m.textInput.Focus()
 					return m, nil
 				}
 			case "enter":
@@ -60,8 +62,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor++
 			}
 		case "b", "left": 
+			lastDirInPath := fmt.Sprintf("%s/", filepath.Base(m.CurrentDir))
 			nd := GetPreviousDir(m.CurrentDir)	
 			m = m.UpdateModelToNewDir(nd)
+			m.cursor = m.GetCursorReturnPosition(lastDirInPath)
 		case " ", "right":
 			if m.cursor < len(m.directories) {
 				selectedDir := m.directories[m.cursor]
@@ -96,7 +100,6 @@ func (m *Model) FilterDirectories() {
 		for _, dir := range m.allDirectories {
 			if strings.Contains(strings.ToLower(dir), searchTerm) {
 				m.directories = append(m.directories, dir)
-				m.Logger += fmt.Sprintf("search filter: %s, %s", searchTerm, dir)
 			}
 		}
 	} else {
@@ -137,4 +140,14 @@ func GetPreviousDir(dirPath string) string {
 	dirPath = strings.Join(dirs, "/")
 
 	return dirPath
+}
+
+func (m Model) GetCursorReturnPosition(lastDirInPath string) int {
+	for i, dir := range m.directories {
+		if dir == lastDirInPath {
+			return i
+		} 
+	}
+
+	return 0
 }

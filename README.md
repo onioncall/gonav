@@ -46,3 +46,23 @@ gonav() {
    cd "$dir"
 }
 ```
+
+## Configuration
+---
+
+Create a config file at `~/.config/gonav/config.json` to customize keybindings, here are the defaults as a template
+
+```json
+{
+  "searchToggle": ["tab"],
+  "focusSearch": ["s"],
+  "selectDirectory": ["enter"],
+  "enterDirectory": [" ", "/"],
+  "exitApplication": ["esc", "q", "ctrl+c"],
+  "up": ["up", "k"],
+  "down": ["down", "j"],
+  "into": ["right", "l", "/", " "],
+  "outOf": ["left", "b"]
+}
+```
+To be clear, if you like the defaults you do not need to add this file

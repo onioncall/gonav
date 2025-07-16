@@ -3,6 +3,7 @@ package tui
 import (
 	"fmt"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/textinput"
@@ -15,11 +16,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if m.inputFocused {
 		switch msg := msg.(type) {
 		case tea.KeyMsg:
-			switch msg.String() {
-			case "esc", "tab":
+			switch {
+			case slices.Contains(SearchToggle, msg.String()):
 				m.inputFocused = false
 				return m, nil
-			case " ":
+			case slices.Contains(EnterDirectory, msg.String()):
 				if len(m.directories) == 1 {
 					dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, m.directories[0])
 					m = m.UpdateModelToNewDir(dirPath)
@@ -27,7 +28,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.textInput.Focus()
 					return m, nil
 				}
-			case "enter":
+			case slices.Contains(SelectDirectory, msg.String()):
 				if len(m.directories) == 1 {
 					dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, m.directories[0])
 					m.CurrentDir = dirPath
@@ -45,34 +46,34 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "q", "esc": 
+		switch {
+		case slices.Contains(ExitApplication, msg.String()): 
 			m.CurrentDir = m.OriginalDir
 			return m, tea.Quit
-		case "s", "tab":
+		case slices.Contains(SearchToggle, msg.String()):
 			m.inputFocused = true
 			m.textInput.Focus()
 			return m, m.textInput.Cursor.BlinkCmd()
-		case "up", "k":
+		case slices.Contains(Up, msg.String()):
 			if m.cursor > 0 {
 				m.cursor--
 			}
-		case "down", "j":
+		case slices.Contains(Down, msg.String()):
 			if m.cursor < len(m.directories)-1 {
 				m.cursor++
 			}
-		case "b", "left": 
+		case slices.Contains(OutOf, msg.String()):
 			lastDirInPath := filepath.Base(m.CurrentDir)
 			nd := GetPreviousDir(m.CurrentDir)	
 			m = m.UpdateModelToNewDir(nd)
 			m.cursor = m.GetCursorReturnPosition(lastDirInPath)
-		case " ", "right":
+		case slices.Contains(Into, msg.String()):
 			if m.cursor < len(m.directories) {
 				selectedDir := m.directories[m.cursor]
 				dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, selectedDir)
 				m = m.UpdateModelToNewDir(dirPath)
 			}
-		case "enter": 
+		case slices.Contains(SelectDirectory, msg.String()): 
 			if m.cursor < len(m.directories) {
 				selectedDir := m.directories[m.cursor]
 				dirPath := fmt.Sprintf("%s/%s", m.CurrentDir, selectedDir)
